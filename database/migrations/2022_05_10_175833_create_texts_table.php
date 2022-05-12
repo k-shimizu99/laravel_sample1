@@ -15,9 +15,13 @@ return new class extends Migration
     {
         Schema::create('texts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('content');
             $table->timestamps();
+            $table->string('title');
+            $table->text('content');
+            $table->string('email');
+            $table->integer('price');
+            $table->boolean('is_visible');
+            $table->unsignedBigInteger('user_id');
         });
     }
 
