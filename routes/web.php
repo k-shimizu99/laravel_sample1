@@ -5,6 +5,7 @@ use App\Http\Controllers\SampleController;
 use App\Http\Controllers\PhotoController;
 use App\Models\Sample;
 use App\Http\Controllers\TextController;
+use App\Http\Controllers\LectureController;
 
 
 /*
@@ -21,6 +22,7 @@ use App\Http\Controllers\TextController;
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::get('/sample/index',[SampleController::class,'index'])->name('samples.index');
 Route::get('/samples/create', [SampleController::class, 'create'])->name('samples.create');
@@ -41,3 +43,16 @@ Route::get('texts/{id}', [TextController::class, 'show'])->name('texts.show');
 Route::get('texts/{id}/edit', [TextController::class, 'edit'])->name('texts.edit');
 Route::post('texts/{id}', [TextController::class, 'update'])->name('texts.update');
 Route::post('texts/{id}/delete', [TextController::class, 'delete'])->name('texts.delete');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('lectures/index', [LectureController::class, 'index'])->name('lectures.index');
+    Route::post('lectures/index', [LectureController::class, 'store'])->name('lectures.store');
+    Route::get('lectures/edit', [LectureController::class, 'edit'])->name('lectures.edit');
+});
+
+
+require __DIR__.'/auth.php';
